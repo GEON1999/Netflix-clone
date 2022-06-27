@@ -62,9 +62,9 @@ table {
 body {
   font-weight: 300;
   font-family: 'Source Sans Pro', sans-serif;
-  color:black;
+  color:white;
   line-height: 1.2;
-  
+  background-color : ${(prop) => prop.theme.black.veryDark}
 }
 a {
   text-decoration:none;

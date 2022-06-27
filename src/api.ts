@@ -6,3 +6,20 @@ export function getMovies() {
     (response) => response.json()
   );
 }
+
+interface IMovie {
+  backdrop_path: string;
+  id: number;
+  title: string;
+  overview: string;
+  poster_path: string;
+}
+
+export interface IGetMovieResult {
+  dates: { maximum: string; minimum: string };
+  page: number;
+  results: IMovie[];
+  // IMovie interface 를 가진 array
+  total_pages: number;
+  total_results: number;
+}
