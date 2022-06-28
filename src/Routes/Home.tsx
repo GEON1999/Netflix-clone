@@ -5,7 +5,7 @@ import { useMatch } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMovies, IGetMovieResult } from "../api";
-import { makeImagePath } from "../utils";
+import { makeImagePath, useWindowDimensions } from "../utils";
 
 const Wrapper = styled.div`
   background: black;
@@ -73,18 +73,6 @@ const Box = styled(motion.div)<{ bg: string }>`
     transform-origin: center right;
   }
 `;
-
-const rowVariant = {
-  hidden: {
-    x: window.outerWidth + 10,
-  },
-  visible: {
-    x: 0,
-  },
-  exit: {
-    x: -window.outerWidth - 10,
-  },
-};
 
 const boxVariant = {
   normal: {
@@ -169,6 +157,7 @@ const SelectedMovieSum = styled(motion.span)``;
 const offset = 6;
 
 function Home() {
+  const width = useWindowDimensions();
   const { scrollY } = useViewportScroll();
   const navigate = useNavigate();
   const { data, isLoading } = useQuery<IGetMovieResult>(
@@ -222,10 +211,10 @@ function Home() {
           <Slider>
             <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
               <Row
-                variants={rowVariant}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
+                //variants={rowVariant}
+                initial={{ x: width + 10 }}
+                animate={{ x: 0 }}
+                exit={{ x: -width - 10 }}
                 transition={{ type: "tween", duration: 1 }}
                 key={index}
               >
