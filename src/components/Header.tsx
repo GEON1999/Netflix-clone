@@ -80,7 +80,7 @@ const Input = styled(motion.input)`
   border: none;
   color: white;
   font-size: 18px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   border-radius: 20px;
   padding: 5px;
   box-shadow: 3px 3px 3px rgb(66, 66, 66);
@@ -181,7 +181,7 @@ function Header() {
             <Form onSubmit={handleSubmit(onValid)}>
               <Input
                 {...register("keyword", { required: true })}
-                placeholder="Netflix Search"
+                placeholder="영화 검색"
                 initial={{ opacity: 0, x: 400 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5, duration: 0.8 }}

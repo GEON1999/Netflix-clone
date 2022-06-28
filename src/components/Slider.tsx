@@ -7,13 +7,15 @@ import { makeImagePath, useWindowDimensions } from "../utils";
 
 const Container = styled(motion.div)`
   position: relative;
-  height: 30vh;
-  width: 100vw;
+  height: 60vh;
+  width: 100%;
+  bottom: 180px;
 `;
 
 const SliderTitle = styled.div`
   font-size: 30px;
-  padding: 20px 50px;
+  font-weight: 800;
+  padding: 20px 100px;
 `;
 
 const Row = styled(motion.div)`
@@ -21,13 +23,13 @@ const Row = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 10px;
-  width: 100%;
-  padding: 0px 50px;
+  width: 100vw;
+  padding: 0px 100px;
 `;
 
 const Box = styled(motion.div)`
   background-color: white;
-  height: 200px;
+  height: 600px;
   font-size: 10px;
   border-radius: 8px;
   cursor: pointer;
@@ -40,29 +42,65 @@ const Box = styled(motion.div)`
 `;
 const BoxImg = styled(motion.div)<{ bg: string }>`
   background-image: url(${(prop) => prop.bg});
-  height: 200px;
+  height: 600px;
   background-size: cover;
   background-position: center center;
-  &:first-child {
-    transform-origin: center left;
-  }
-  &:last-child {
-    transform-origin: center right;
-  }
 `;
 
 const Info = styled(motion.div)`
   background-color: ${(props) => props.theme.black.darker};
   padding: 15px 0px;
-  position: absolute;
   bottom: 0;
   width: 100%;
   opacity: 0;
   h4 {
-    text-align: center;
+    margin-left: 22px;
     color: white;
-
     font-size: 16px;
+  }
+`;
+
+const BtnBox = styled(motion.div)`
+  background-color: transparent;
+  height: 600px;
+  width: 50px;
+  left: 0;
+  display: flex;
+  justify-content: cneter;
+  align-items: center;
+  position: absolute;
+  left: 96%;
+  cursor: pointer;
+  transition: ease-in-out 0.5s;
+  z-index: 3;
+  &:hover {
+    background-color: rgb(32, 32, 32);
+    opacity: 0.8;
+    svg {
+      fill: rgb(138, 138, 138);
+      transform: scale(1.3);
+    }
+  }
+`;
+
+const Svg = styled(motion.svg)`
+  height: 30px;
+  width: 30px;
+  fill: rgb(128, 128, 128);
+  transition: ease-in-out 0.5s;
+  margin-left: 5px;
+`;
+
+const Infotitle = styled.div``;
+
+const InfoSub = styled.div`
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 12px;
+  padding: 0px 10px;
+  span {
+    margin: 0px 10px;
   }
 `;
 
@@ -71,7 +109,7 @@ const boxVariant = {
     scale: 1,
   },
   hover: {
-    scale: 1.3,
+    scale: 1.2,
     y: -50,
     transition: {
       delay: 0.4,
@@ -122,7 +160,7 @@ function Slider({ data, title }: SliderProps) {
 
   return (
     <Container>
-      <SliderTitle onClick={incraseIndex}>{title}</SliderTitle>
+      <SliderTitle>{title}</SliderTitle>
       <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
         <Row
           //variants={rowVariant}
@@ -147,11 +185,24 @@ function Slider({ data, title }: SliderProps) {
               >
                 <BoxImg bg={makeImagePath(movie.poster_path, "w500")}></BoxImg>
                 <Info variants={infoVariant}>
-                  <h4>{movie.title}</h4>
+                  <Infotitle>
+                    <h4>{movie.title}</h4>
+                  </Infotitle>
+                  <InfoSub>
+                    <span>⭐{movie.vote_average?.toFixed(1)}</span>
+                    <span>개봉일 : {movie.release_date}</span>
+                  </InfoSub>
                 </Info>
               </Box>
             ))}
         </Row>
+      </AnimatePresence>
+      <AnimatePresence>
+        <BtnBox onClick={incraseIndex}>
+          <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
+            <path d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z" />
+          </Svg>
+        </BtnBox>
       </AnimatePresence>
     </Container>
   );

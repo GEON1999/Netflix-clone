@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMovies, IGetMovieResult, popularMovies } from "../api";
 import MovieDetail from "../components/MovieDetail";
@@ -26,8 +27,21 @@ const Title = styled.span`
 `;
 
 const Overview = styled.span`
-  font-size: 22px;
-  width: 45%;
+  font-size: 20px;
+  width: 40%;
+`;
+
+const Detail = styled.button`
+  background-color: white;
+  border-radius: 5px;
+  width: 150px;
+  padding: 10px;
+  margin: 30px 0px;
+  color: ${(prop) => prop.theme.black.darker};
+  text-align: center;
+  font-size: 15px;
+  font-weight: 800;
+  border: none;
 `;
 
 const Loader = styled.div`
@@ -39,14 +53,6 @@ const Loader = styled.div`
   font-weight: 800;
 `;
 
-const SiderContainer = styled.div`
-  justify-content: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: absolute;
-  bottom: -650px;
-`;
-
 function Home() {
   const { data: nowPlaying, isLoading } = useQuery<IGetMovieResult>(
     ["movies", "nowPlaying"],
@@ -56,6 +62,10 @@ function Home() {
     ["movies", "popular"],
     popularMovies
   );
+  const navigate = useNavigate();
+  const onBoxClicked = () => {
+    navigate(`/movies/${nowPlaying?.results[0].id}`);
+  };
 
   return (
     <Wrapper>
@@ -68,11 +78,11 @@ function Home() {
           >
             <Title>{nowPlaying?.results[0].title}</Title>
             <Overview>{nowPlaying?.results[0].overview}</Overview>
+            <Detail onClick={onBoxClicked}>자세히 보기</Detail>
           </Banner>
-          <SiderContainer>
-            <Slider data={nowPlaying?.results ?? []} title="Now Playing" />
-            <Slider data={popular?.results ?? []} title="Popular" />
-          </SiderContainer>
+
+          <Slider data={nowPlaying?.results ?? []} title="극장 상영 영화" />
+          <Slider data={popular?.results ?? []} title="최고의 영화" />
         </>
       )}
       <MovieDetail />

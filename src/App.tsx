@@ -5,13 +5,13 @@ import Search from "./Routes/Search";
 import Tv from "./Routes/Tv";
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Header />
       <Routes>
         <Route path="/tv" element={<Tv />} />
         <Route path="/search" element={<Search />} />
         <Route path="/" element={<Home />}>
-          <Route path="/movies/:movieId" element={<Home />} />
+          <Route path="/movies/:movieId" element={<div>Movie</div>} />
         </Route>
       </Routes>
     </BrowserRouter>
