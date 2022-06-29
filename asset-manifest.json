@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/ott/static/js/main.6b8f5310.js",
+    "main.js": "/ott/static/js/main.863a88d3.js",
     "index.html": "/ott/index.html",
-    "main.6b8f5310.js.map": "/ott/static/js/main.6b8f5310.js.map"
+    "main.863a88d3.js.map": "/ott/static/js/main.863a88d3.js.map"
   },
   "entrypoints": [
-    "static/js/main.6b8f5310.js"
+    "static/js/main.863a88d3.js"
   ]
 }
