@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IMovie } from "../api";
@@ -7,9 +7,8 @@ import { makeImagePath, useWindowDimensions } from "../utils";
 
 const Container = styled(motion.div)`
   position: relative;
-  height: 60vh;
+  bottom: 150px;
   width: 100%;
-  bottom: 180px;
 `;
 
 const SliderTitle = styled.div`
@@ -23,7 +22,7 @@ const Row = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 10px;
-  width: 100vw;
+  width: 99vw;
   padding: 0px 100px;
 `;
 
@@ -132,12 +131,13 @@ const infoVariant = {
 
 interface SliderProps {
   data: IMovie[];
-  title?: string;
+  title: string;
+  path?: string;
 }
 
 const offset = 6;
 
-function Slider({ data, title }: SliderProps) {
+function Slider({ data, title, path }: SliderProps) {
   const navigate = useNavigate();
   const width = useWindowDimensions();
   const [index, setIndex] = useState(0);
@@ -208,4 +208,4 @@ function Slider({ data, title }: SliderProps) {
   );
 }
 
-export default Slider;
+export default React.memo(Slider);

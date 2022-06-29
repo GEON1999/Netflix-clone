@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
+import React from "react";
 import { useQuery } from "react-query";
-import { useMatch, useNavigate } from "react-router-dom";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { API_KEY, BASE_PATH } from "../api";
 import { makeImagePath } from "../utils";
@@ -64,10 +65,15 @@ const SelectMovTitle = styled(motion.div)`
     opacity: 0.8;
   }
 `;
-const SelectMovSum = styled(motion.span)`
-  position: absolute;
-  top: 70px;
-  width: 70%;
+const OverviwTitle = styled.div`
+  margin-top: 20px;
+  font-weight: 800;
+  font-size: 20px;
+`;
+
+const SelectMovSum = styled(motion.div)`
+  margin-top: 20px;
+  font-size: 15px;
 `;
 
 const SelectMovSub = styled.div`
@@ -77,9 +83,9 @@ const SelectMovSub = styled.div`
   flex-direction: column;
   padding: 20px 0px;
   opacity: 0.8;
-  font-size: 15px;
+  font-size: 18px;
   span {
-    margin: 2px 0px;
+    margin: 5px 0px;
   }
 `;
 
@@ -93,7 +99,6 @@ const SelectMovGenreBox = styled.div`
 const SelectMovGenre = styled.div`
   display: flex;
   top: 0px;
-
   margin-bottom: 10px;
   span {
     font-size: 13px;
@@ -101,9 +106,45 @@ const SelectMovGenre = styled.div`
     opacity: 1;
   }
 `;
+const ActorTitle = styled.div`
+  margin-top: 50px;
+  font-weight: 800;
+  font-size: 20px;
+`;
 
+const ActorInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+`;
+
+const ActorBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center;
+`;
+const ActorImg = styled.div`
+  width: 100px;
+  height: 100px;
+  background-position: center center;
+  background-size: cover;
+  margin-bottom: 10px;
+  border-radius: 15px;
+`;
+
+const ActorName = styled.span`
+  margin-top: 5px;
+  opacity: 0.6;
+`;
 interface IGenre {
   name: string;
+}
+
+interface IPath {
+  path?: any;
 }
 
 interface DetailProps {
@@ -114,18 +155,43 @@ interface DetailProps {
   release_date: string;
   title: string;
   overview: string;
+  id: number;
 }
 
-function MovieDetail() {
-  const { data, isLoading } = useQuery<DetailProps>(["movies", "detail"], () =>
-    fetch(
-      `${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}&language=ko-KR`
-    ).then((response) => response.json())
+interface ICast {
+  character: string;
+  name: string;
+  id: number;
+  profile_path: string;
+}
+
+interface CreditProps {
+  cast: ICast[];
+  id: number;
+}
+
+function MovieDetail({ path }: IPath) {
+  //const location = useLocation();
+  const { data: movies, isLoading } = useQuery<DetailProps>(
+    ["movies", "detail"],
+    async () =>
+      await fetch(
+        `${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}&language=ko-KR`
+      ).then((response) => response.json())
   );
-  console.log(data);
+
+  const { data: credit } = useQuery<CreditProps>(
+    ["movies", "credit"],
+    async () =>
+      await fetch(
+        `${BASE_PATH}/movie/${movieId}/credits?api_key=${API_KEY}&language=ko-KR`
+      ).then((response) => response.json())
+  );
+
   const navigate = useNavigate();
-  const clickedMovieMatch = useMatch("/movies/:movieId");
+  const clickedMovieMatch = useMatch(`${path}/:movieId`);
   const movieId = clickedMovieMatch?.params.movieId;
+  console.log(credit);
   /*const SelectMov =clickedMovieMatch?.params.movieId
     clickedMovieMatch?.params.movieId &&
     data?.find(
@@ -136,6 +202,10 @@ find() 메서드는 주어진 판별 함수를 만족하는 첫 번째 요소의
 
   const onOverpageClicked = () => {
     navigate(`/`);
+
+    /*   if (location.pathname.slice(0, 7) === "/search") {
+      navigate(`/search`);
+    }*/
   };
   return (
     <>
@@ -152,35 +222,51 @@ find() 메서드는 주어진 판별 함수를 만족하는 첫 번째 요소의
                   exit={{ opacity: 0 }}
                 />
                 <ClickedMovie layoutId={String(movieId)}>
-                  {data && (
+                  {movies && (
                     <>
                       <SelectMovImg
                         style={{
                           backgroundImage: `linear-gradient(transparent, rgb(24,24,24)) ,url(${makeImagePath(
-                            data?.backdrop_path
+                            movies?.backdrop_path
                           )})`,
                         }}
                       />
                       <SelectMovDetail>
                         <SelectMovTitle>
                           <SelectMovGenre>
-                            {data.genres.map((genre) => (
-                              <SelectMovGenreBox>
+                            {movies.genres.map((genre, index) => (
+                              <SelectMovGenreBox key={index}>
                                 <span>{genre.name}</span>
                               </SelectMovGenreBox>
                             ))}
                           </SelectMovGenre>
                           <div style={{ display: "flex" }}>
-                            <h1>{data.title}</h1>
-                            <span> {data.release_date.slice(0, 4)}</span>
+                            <h1>{movies.title}</h1>
+                            <span> {movies.release_date.slice(0, 4)}</span>
                           </div>
                         </SelectMovTitle>
                         <SelectMovSub>
-                          <span>{data.tagline}</span>
-                          <span>⭐{data.vote_average?.toFixed(1)}</span>
+                          <span>⭐{movies.vote_average?.toFixed(1)}</span>
+                          <span>{movies.tagline}</span>
                         </SelectMovSub>
-
-                        <SelectMovSum>{data.overview}</SelectMovSum>
+                        <OverviwTitle>줄거리</OverviwTitle>
+                        <SelectMovSum>{movies.overview}</SelectMovSum>
+                        <ActorTitle>출연진</ActorTitle>
+                        <ActorInfo>
+                          {credit?.cast.slice(0, 6).map((act, index) => (
+                            <ActorBox>
+                              <ActorImg
+                                style={{
+                                  backgroundImage: `url(${makeImagePath(
+                                    act?.profile_path
+                                  )})`,
+                                }}
+                              ></ActorImg>
+                              <h1>{act.name}</h1>
+                              <ActorName>{act.character}</ActorName>
+                            </ActorBox>
+                          ))}
+                        </ActorInfo>
                       </SelectMovDetail>
                     </>
                   )}
@@ -194,4 +280,4 @@ find() 메서드는 주어진 판별 함수를 만족하는 첫 번째 요소의
   );
 }
 
-export default MovieDetail;
+export default React.memo(MovieDetail);

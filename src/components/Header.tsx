@@ -33,10 +33,6 @@ const Logo = styled(motion.svg)`
   height: 25px;
   fill: ${(props) => props.theme.red};
   margin-left: 60px;
-  /*  path {
-    stroke-width: 6px;
-    stroke: white;
-  }*/
 `;
 
 const Items = styled(motion.ul)`
@@ -49,6 +45,7 @@ const Item = styled(motion.li)`
   margin-right: 20px;
   color: ${(props) => props.theme.white.lighter};
   transition: color 0.3s ease-in-out;
+  font-weight: 800;
   &:hover {
     color: ${(props) => props.theme.white.darker};
   }
@@ -83,13 +80,14 @@ const Input = styled(motion.input)`
   margin-bottom: 10px;
   border-radius: 20px;
   padding: 5px;
-  box-shadow: 3px 3px 3px rgb(66, 66, 66);
+  box-shadow: 1px 1px 1px rgb(66, 66, 66);
   text-align: center;
   :focus {
     outline: none;
   }
   ::placeholder {
     text-align: center;
+    color: aliceblue;
   }
 `;
 
@@ -148,10 +146,10 @@ function Header() {
           transition={{ duration: 0.7 }}
         >
           <Link to={"/"}>
-            <Item>Home</Item>
+            <Item>홈</Item>
           </Link>
           <Link to="/Tv">
-            <Item>Tv Shows</Item>
+            <Item>시리즈</Item>
           </Link>
         </Items>
       </Col>

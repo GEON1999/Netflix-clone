@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMovies, IGetMovieResult, popularMovies } from "../api";
 import MovieDetail from "../components/MovieDetail";
@@ -53,6 +53,14 @@ const Loader = styled.div`
   font-weight: 800;
 `;
 
+const SliderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 80vh;
+`;
+
 function Home() {
   const { data: nowPlaying, isLoading } = useQuery<IGetMovieResult>(
     ["movies", "nowPlaying"],
@@ -66,7 +74,7 @@ function Home() {
   const onBoxClicked = () => {
     navigate(`/movies/${nowPlaying?.results[0].id}`);
   };
-
+  const location = useLocation();
   return (
     <Wrapper>
       {isLoading ? (
@@ -80,12 +88,23 @@ function Home() {
             <Overview>{nowPlaying?.results[0].overview}</Overview>
             <Detail onClick={onBoxClicked}>자세히 보기</Detail>
           </Banner>
-
-          <Slider data={nowPlaying?.results ?? []} title="극장 상영 영화" />
-          <Slider data={popular?.results ?? []} title="최고의 영화" />
+          <SliderContainer>
+            <Slider
+              data={nowPlaying?.results ?? []}
+              title="극장 상영 영화"
+              path="/movies"
+            />
+            <Slider
+              data={popular?.results ?? []}
+              title="최고의 영화"
+              path="/movies"
+            />
+          </SliderContainer>
         </>
       )}
-      <MovieDetail />
+      {location.pathname.slice(0, 7) === "/movies" ? (
+        <MovieDetail path="/movies" />
+      ) : null}
     </Wrapper>
   );
 }
