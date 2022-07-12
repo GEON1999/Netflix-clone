@@ -9,6 +9,12 @@ const Container = styled(motion.div)`
   position: relative;
   bottom: 150px;
   width: 100%;
+  &:nth-child(1) {
+    margin-top: 100px;
+  }
+  &:nth-child(2) {
+    margin-top: 700px;
+  }
 `;
 
 const SliderTitle = styled.div`
@@ -208,4 +214,4 @@ function Slider({ data, title, path }: SliderProps) {
   );
 }
 
-export default React.memo(Slider);
+export default Slider;

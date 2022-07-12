@@ -20,8 +20,7 @@ const Loader = styled.div`
 `;
 
 const Cotainer = styled(motion.div)`
-  position: absolute;
-  top: 400px;
+  margin-top: 400px;
 `;
 
 function Search() {
@@ -31,7 +30,7 @@ function Search() {
     "search",
     async () =>
       await fetch(
-        `${BASE_PATH}/search/movie?api_key=${API_KEY}&query=${keyword}`
+        `${BASE_PATH}/search/movie?api_key=${API_KEY}&language=ko-KR&query=${keyword}`
       ).then((response) => response.json())
   );
 

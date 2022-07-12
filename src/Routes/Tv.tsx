@@ -59,13 +59,7 @@ const Loader = styled.div`
   font-weight: 800;
 `;
 
-const SliderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 80vh;
-`;
+const SliderContainer = styled.div``;
 
 function Tv() {
   const { data: nowPlaying, isLoading } = useQuery<IGetMovieResult>(
@@ -97,12 +91,12 @@ function Tv() {
           <SliderContainer>
             <Slider
               data={nowPlaying?.results ?? []}
-              title="방영 중인 콘텐츠"
+              title="방영 중인 시리즈"
               path="/movies"
             />
             <Slider
               data={popular?.results ?? []}
-              title="최고의 영화"
+              title="최고의 시리즈"
               path="/movies"
             />
           </SliderContainer>

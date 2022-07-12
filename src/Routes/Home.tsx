@@ -15,7 +15,7 @@ const Banner = styled(motion.div)<{ bg: string }>`
   flex-direction: column;
   justify-content: center;
   padding: 60px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgb(20, 20, 20)),
     url(${(prop) => prop.bg});
   background-size: cover;
 `;
@@ -53,13 +53,7 @@ const Loader = styled.div`
   font-weight: 800;
 `;
 
-const SliderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 80vh;
-`;
+const SliderContainer = styled.div``;
 
 function Home() {
   const { data: nowPlaying, isLoading } = useQuery<IGetMovieResult>(
