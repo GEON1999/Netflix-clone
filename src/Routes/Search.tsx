@@ -2,11 +2,9 @@ import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { API_KEY, BASE_PATH, IGetSearchResult } from "../api";
 import styled from "styled-components";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
-import { makeImagePath, useWindowDimensions } from "../utils";
+import { motion } from "framer-motion";
 import Slider from "../components/Slider";
-import MovieDetail from "../components/MovieDetail";
+
 const Wrapper = styled.div`
   background-color: ${(prop) => prop.theme.black.veryDark};
 `;

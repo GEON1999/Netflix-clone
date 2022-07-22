@@ -77,15 +77,26 @@ const SelectMovSum = styled(motion.div)`
 `;
 
 const SelectMovSub = styled.div`
+  width: 100%;
+  height: 40px;
   position: absolute;
   top: -70px;
   display: flex;
-  flex-direction: column;
-  padding: 20px 0px;
-  opacity: 0.8;
+  justify-content: space-between;
+  padding: 10px 0px;
   font-size: 18px;
+  opacity: 0.8;
   span {
-    margin: 5px 0px;
+    &:first-child {
+      margin-top: 10px;
+      font-style: oblique;
+    }
+    &:nth-child(2) {
+      position: relative;
+      margin-right: 40px;
+      bottom: 5px;
+      font-size: 25px;
+    }
   }
 `;
 
@@ -246,8 +257,8 @@ find() 메서드는 주어진 판별 함수를 만족하는 첫 번째 요소의
                           </div>
                         </SelectMovTitle>
                         <SelectMovSub>
-                          <span>⭐{movies.vote_average?.toFixed(1)}</span>
                           <span>{movies.tagline}</span>
+                          <span>⭐{movies.vote_average?.toFixed(1)}</span>
                         </SelectMovSub>
                         <OverviwTitle>줄거리</OverviwTitle>
                         <SelectMovSum>{movies.overview}</SelectMovSum>

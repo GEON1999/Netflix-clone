@@ -2,13 +2,7 @@ import { motion } from "framer-motion";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {
-  getMovies,
-  IGetMovieResult,
-  onAirTv,
-  popularMovies,
-  topRatedTv,
-} from "../api";
+import { IGetMovieResult, onAirTv, topRatedTv } from "../api";
 import MovieDetail from "../components/MovieDetail";
 import Slider from "../components/Slider";
 import { makeImagePath } from "../utils";
