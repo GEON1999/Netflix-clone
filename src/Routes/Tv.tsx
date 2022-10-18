@@ -53,7 +53,12 @@ const Loader = styled.div`
   font-weight: 800;
 `;
 
-const SliderContainer = styled.div``;
+const SliderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 55vh;
+`;
 
 function Tv() {
   const { data: nowPlaying, isLoading } = useQuery<IGetMovieResult>(

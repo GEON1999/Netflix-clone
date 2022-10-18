@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -15,7 +16,7 @@ import { makeImagePath } from "../utils";
 const Wrapper = styled.div``;
 
 const Banner = styled(motion.div)<{ bg: string }>`
-  height: 100vh;
+  height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -58,7 +59,12 @@ const Loader = styled.div`
   font-weight: 800;
 `;
 
-const SliderContainer = styled.div``;
+const SliderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+`;
 
 function Home() {
   const { data: nowPlaying, isLoading } = useQuery<IGetMovieResult>(
@@ -122,8 +128,8 @@ function Home() {
           </SliderContainer>
         </>
       )}
-      {location.pathname.slice(0, 7) === "/movies" ? (
-        <MovieDetail path="/movies" />
+      {state === true ? (
+        <MovieDetail path="/movies" movieId={location.pathname.slice(8)} />
       ) : null}
     </Wrapper>
   );

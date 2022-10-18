@@ -1,21 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IMovie } from "../api";
 import { makeImagePath, useWindowDimensions } from "../utils";
 
-const Container = styled(motion.div)`
-  position: relative;
-  bottom: 150px;
-  width: 100%;
-  &:nth-child(1) {
-    margin-top: 100px;
-  }
-  &:nth-child(2) {
-    margin-top: 700px;
-  }
-`;
+const Container = styled(motion.div)``;
 
 const SliderTitle = styled.div`
   font-size: 30px;
@@ -34,7 +24,7 @@ const Row = styled(motion.div)`
 
 const Box = styled(motion.div)`
   background-color: white;
-  height: 600px;
+  height: 28vh;
   font-size: 10px;
   border-radius: 8px;
   cursor: pointer;
@@ -47,27 +37,27 @@ const Box = styled(motion.div)`
 `;
 const BoxImg = styled(motion.div)<{ bg: string }>`
   background-image: url(${(prop) => prop.bg});
-  height: 600px;
+  height: 28vh;
   background-size: cover;
   background-position: center center;
 `;
 
 const Info = styled(motion.div)`
   background-color: ${(props) => props.theme.black.darker};
-  padding: 15px 0px;
+  padding: 10px 0px;
   bottom: 0;
   width: 100%;
   opacity: 0;
   h4 {
     margin-left: 22px;
     color: white;
-    font-size: 16px;
+    font-size: 12px;
   }
 `;
 
 const BtnBox = styled(motion.div)`
   background-color: transparent;
-  height: 600px;
+  height: 28vh;
   width: 50px;
   left: 0;
   display: flex;
@@ -191,7 +181,7 @@ function Slider({ data, title, path, id }: SliderProps) {
                 transition={{ type: "tween" }}
               >
                 <BoxImg bg={makeImagePath(movie.poster_path, "w500")}></BoxImg>
-                <Info variants={infoVariant}>
+                <Info style={{ zIndex: 100 }} variants={infoVariant}>
                   <Infotitle>
                     <h4>{movie.title}</h4>
                   </Infotitle>
