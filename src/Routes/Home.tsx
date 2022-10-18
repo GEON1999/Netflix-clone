@@ -2,7 +2,12 @@ import { motion } from "framer-motion";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getMovies, IGetMovieResult, popularMovies } from "../api";
+import {
+  getMovies,
+  IGetMovieResult,
+  popularMovies,
+  topRatedMovies,
+} from "../api";
 import MovieDetail from "../components/MovieDetail";
 import Slider from "../components/Slider";
 import { makeImagePath } from "../utils";
@@ -60,6 +65,10 @@ function Home() {
     ["movies", "nowPlaying"],
     getMovies
   );
+  const { data: topRated } = useQuery<IGetMovieResult>(
+    ["movies", "topRated"],
+    topRatedMovies
+  );
   const { data: popular } = useQuery<IGetMovieResult>(
     ["movies", "popular"],
     popularMovies
@@ -87,11 +96,19 @@ function Home() {
               data={nowPlaying?.results ?? []}
               title="극장 상영 영화"
               path="/movies"
+              id="nowPlaying"
+            />
+            <Slider
+              data={topRated?.results ?? []}
+              title="최고의 영화"
+              path="/movies"
+              id="topRated"
             />
             <Slider
               data={popular?.results ?? []}
-              title="최고의 영화"
+              title="인기 영화"
               path="/movies"
+              id="popular"
             />
           </SliderContainer>
         </>

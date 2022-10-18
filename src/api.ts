@@ -7,9 +7,15 @@ export function getMovies() {
   ).then((response) => response.json());
 }
 
-export function popularMovies() {
+export function topRatedMovies() {
   return fetch(
     `${BASE_PATH}/movie/top_rated?api_key=${API_KEY}&language=ko-KR`
+  ).then((response) => response.json());
+}
+
+export function popularMovies() {
+  return fetch(
+    `${BASE_PATH}/movie/popular?api_key=${API_KEY}&language=ko-KR`
   ).then((response) => response.json());
 }
 

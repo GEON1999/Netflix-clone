@@ -139,11 +139,12 @@ interface SliderProps {
   data: IMovie[];
   title: string;
   path?: string;
+  id?: string;
 }
 
 const offset = 6;
 
-function Slider({ data, title, path }: SliderProps) {
+function Slider({ data, title, path, id }: SliderProps) {
   const navigate = useNavigate();
   const width = useWindowDimensions();
   const [index, setIndex] = useState(0);
@@ -181,7 +182,7 @@ function Slider({ data, title, path }: SliderProps) {
             .slice(offset * index, offset * index + offset)
             .map((movie) => (
               <Box
-                layoutId={movie.id + ""}
+                layoutId={id ? id + movie.id : movie.id + ""}
                 onClick={() => onBoxClicked(movie.id)}
                 key={movie.id}
                 variants={boxVariant}
