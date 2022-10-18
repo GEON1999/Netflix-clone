@@ -78,6 +78,15 @@ function Home() {
     navigate(`/movies/${nowPlaying?.results[0].id}`);
   };
   const location = useLocation();
+  const [state, setState] = useState(false);
+  useEffect(() => {
+    if (location.pathname.slice(0, 7) === "/movies") {
+      setState(true);
+    }
+    if (location.pathname.slice(0, 7) !== "/movies") {
+      setState(false);
+    }
+  }, [location]);
   return (
     <Wrapper>
       {isLoading ? (

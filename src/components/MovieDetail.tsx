@@ -156,6 +156,7 @@ interface IGenre {
 
 interface IPath {
   path?: any;
+  movieId?: any;
 }
 
 interface DetailProps {
@@ -181,7 +182,7 @@ interface CreditProps {
   id: number;
 }
 
-function MovieDetail({ path }: IPath) {
+function MovieDetail({ path, movieId }: IPath) {
   //const location = useLocation();
   const { data: movies, isLoading } = useQuery<DetailProps>(
     ["movies", "detail"],
@@ -200,9 +201,7 @@ function MovieDetail({ path }: IPath) {
   );
 
   const navigate = useNavigate();
-  const clickedMovieMatch = useMatch(`${path}/:movieId`);
-  const movieId = clickedMovieMatch?.params.movieId;
-  console.log(credit);
+
   /*const SelectMov =clickedMovieMatch?.params.movieId
     clickedMovieMatch?.params.movieId &&
     data?.find(
@@ -220,11 +219,11 @@ find() 메서드는 주어진 판별 함수를 만족하는 첫 번째 요소의
   };
   return (
     <>
-      {isLoading ? (
+      {movies?.id !== Number(movieId) ? (
         <h1>Loading..</h1>
       ) : (
         <AnimatePresence>
-          {clickedMovieMatch ? (
+          {movies?.id === Number(movieId) ? (
             <>
               <ClickedMovieContainer>
                 <OverPage
