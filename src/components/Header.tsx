@@ -73,14 +73,14 @@ const Input = styled(motion.input)`
   width: 40%;
   height: 38px;
   z-index: 100;
-  background-color: rgb(3, 3, 3);
+  background-color: rgb(20, 7, 7);
   border: none;
   color: white;
   font-size: 18px;
   margin-bottom: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 5px;
-  box-shadow: 1px 1px 1px rgb(66, 66, 66);
+  box-shadow: 0.5px 0.5px 0.5px rgb(148, 148, 148);
   text-align: center;
   :focus {
     outline: none;
@@ -179,7 +179,7 @@ function Header() {
             <Form onSubmit={handleSubmit(onValid)}>
               <Input
                 {...register("keyword", { required: true })}
-                placeholder="영화 검색"
+                placeholder="검색어를 입력 해주세요."
                 initial={{ opacity: 0, x: 400 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
