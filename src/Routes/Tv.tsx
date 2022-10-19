@@ -2,9 +2,10 @@ import { motion } from "framer-motion";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 import { IGetMovieResult, onAirTv, topRatedTv } from "../api";
-import MovieDetail from "../components/MovieDetail";
 import Slider from "../components/Slider";
+import TvDetail from "../components/TvDetail";
 import { makeImagePath } from "../utils";
 
 const Wrapper = styled.div``;
@@ -71,9 +72,18 @@ function Tv() {
   );
   const navigate = useNavigate();
   const onBoxClicked = () => {
-    navigate(`/movies/${nowPlaying?.results[0].id}`);
+    navigate(`/Tv/${nowPlaying?.results[0].id}`);
   };
   const location = useLocation();
+  const [state, setState] = useState(false);
+  useEffect(() => {
+    if (location.pathname.slice(0, 4) === "/Tv/") {
+      setState(true);
+    }
+    if (location.pathname.slice(0, 4) !== "/Tv/") {
+      setState(false);
+    }
+  }, [location]);
   return (
     <Wrapper>
       {isLoading ? (
@@ -91,18 +101,18 @@ function Tv() {
             <Slider
               data={nowPlaying?.results ?? []}
               title="방영 중인 시리즈"
-              path="/movies"
+              path="/Tv"
             />
             <Slider
               data={popular?.results ?? []}
               title="최고의 시리즈"
-              path="/movies"
+              path="/Tv"
             />
           </SliderContainer>
         </>
       )}
-      {location.pathname.slice(0, 7) === "/movies" ? (
-        <MovieDetail path="/movies" />
+      {state === true ? (
+        <TvDetail path="/Tv" tvId={location.pathname.slice(4)} />
       ) : null}
     </Wrapper>
   );

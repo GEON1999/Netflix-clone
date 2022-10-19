@@ -148,9 +148,6 @@ function Slider({ data, title, path, id }: SliderProps) {
       setIndex((prev) => (prev === maxSliderLength ? 0 : prev + 1));
     }
   };
-  const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
-  };
   const toggleLeaving = () => {
     setLeaving((prev) => !prev);
   };
@@ -170,24 +167,29 @@ function Slider({ data, title, path, id }: SliderProps) {
           {data
             .slice(1)
             .slice(offset * index, offset * index + offset)
-            .map((movie) => (
+            .map((slide) => (
               <Box
-                layoutId={id ? id + movie.id : movie.id + ""}
-                onClick={() => onBoxClicked(movie.id)}
-                key={movie.id}
+                layoutId={id ? id + slide.id : slide.id + ""}
+                onClick={() => navigate(`/${path}/${slide.id}`)}
+                key={slide.id}
                 variants={boxVariant}
                 whileHover="hover"
                 initial="normal"
                 transition={{ type: "tween" }}
               >
-                <BoxImg bg={makeImagePath(movie.poster_path, "w500")}></BoxImg>
+                <BoxImg bg={makeImagePath(slide.poster_path, "w500")}></BoxImg>
+
                 <Info style={{ zIndex: 100 }} variants={infoVariant}>
                   <Infotitle>
-                    <h4>{movie.title}</h4>
+                    <h4>{slide.title ? slide.title : slide.name}</h4>
                   </Infotitle>
                   <InfoSub>
-                    <span>⭐{movie.vote_average?.toFixed(1)}</span>
-                    <span>개봉일 : {movie.release_date}</span>
+                    {slide.vote_average ? (
+                      <span>⭐{slide.vote_average?.toFixed(1)}</span>
+                    ) : null}
+                    {path === "/movies" ? (
+                      <span>개봉일 : {slide.release_date}</span>
+                    ) : null}
                   </InfoSub>
                 </Info>
               </Box>

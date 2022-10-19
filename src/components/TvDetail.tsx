@@ -156,7 +156,7 @@ interface IGenre {
 
 interface IPath {
   path?: any;
-  movieId?: any;
+  tvId?: any;
 }
 
 interface DetailProps {
@@ -167,6 +167,7 @@ interface DetailProps {
   release_date: string;
   title: string;
   overview: string;
+  name: string;
   id: number;
 }
 
@@ -182,34 +183,35 @@ interface CreditProps {
   id: number;
 }
 
-function MovieDetail({ path, movieId }: IPath) {
+function TvDetail({ path, tvId }: IPath) {
   //const location = useLocation();
-  const { data: movies } = useQuery<DetailProps>(
-    ["movies", "detail"],
+  const { data: tvs } = useQuery<DetailProps>(
+    ["tvs", "detail"],
     async () =>
       await fetch(
-        `${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}&language=ko-KR`
+        `${BASE_PATH}/tv/${tvId}?api_key=${API_KEY}&language=ko-KR`
+      ).then((response) => response.json())
+  );
+  const { data: credit } = useQuery<CreditProps>(
+    ["tvs", "credit"],
+    async () =>
+      await fetch(
+        `${BASE_PATH}/tv/${tvId}/credits?api_key=${API_KEY}&language=ko-KR`
       ).then((response) => response.json())
   );
 
-  const { data: credit } = useQuery<CreditProps>(
-    ["movies", "credit"],
-    async () =>
-      await fetch(
-        `${BASE_PATH}/movie/${movieId}/credits?api_key=${API_KEY}&language=ko-KR`
-      ).then((response) => response.json())
-  );
   const navigate = useNavigate();
+
   const onOverpageClicked = () => {
-    navigate(`/`);
+    navigate(`/Tv`);
   };
   return (
     <>
-      {movies?.id !== Number(movieId) ? (
+      {tvs?.id !== Number(tvId) ? (
         <h1>Loading..</h1>
       ) : (
         <AnimatePresence>
-          {movies?.id === Number(movieId) ? (
+          {tvs?.id === Number(tvId) ? (
             <>
               <ClickedMovieContainer>
                 <OverPage
@@ -217,36 +219,35 @@ function MovieDetail({ path, movieId }: IPath) {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                 />
-                <ClickedMovie layoutId={String(movieId)}>
-                  {movies && (
+                <ClickedMovie layoutId={String(tvId)}>
+                  {tvs && (
                     <>
                       <SelectMovImg
                         style={{
                           backgroundImage: `linear-gradient(transparent, rgb(24,24,24)) ,url(${makeImagePath(
-                            movies?.backdrop_path
+                            tvs?.backdrop_path
                           )})`,
                         }}
                       />
                       <SelectMovDetail>
                         <SelectMovTitle>
                           <SelectMovGenre>
-                            {movies.genres.map((genre, index) => (
+                            {tvs.genres.map((genre, index) => (
                               <SelectMovGenreBox key={index}>
                                 <span>{genre.name}</span>
                               </SelectMovGenreBox>
                             ))}
                           </SelectMovGenre>
                           <div style={{ display: "flex" }}>
-                            <h1>{movies.title}</h1>
-                            <span> {movies.release_date.slice(0, 4)}</span>
+                            <h1>{tvs?.name}</h1>
                           </div>
                         </SelectMovTitle>
                         <SelectMovSub>
-                          <span>{movies.tagline}</span>
-                          <span>⭐{movies.vote_average?.toFixed(1)}</span>
+                          <span>{tvs.tagline}</span>
+                          <span>⭐{tvs.vote_average?.toFixed(1)}</span>
                         </SelectMovSub>
                         <OverviwTitle>줄거리</OverviwTitle>
-                        <SelectMovSum>{movies.overview}</SelectMovSum>
+                        <SelectMovSum>{tvs.overview}</SelectMovSum>
                         <ActorTitle>출연진</ActorTitle>
                         <ActorInfo>
                           {credit?.cast.slice(0, 6).map((act, index) => (
@@ -276,4 +277,4 @@ function MovieDetail({ path, movieId }: IPath) {
   );
 }
 
-export default React.memo(MovieDetail);
+export default React.memo(TvDetail);
