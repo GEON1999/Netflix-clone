@@ -1,46 +1,69 @@
-# Getting Started with Create React App
+<div align="center">
+  <a href="https://carrot-market-geon1999.vercel.app/">
+    <img height="120" src="/preview/logo.png" />
+    <br />
+    <a display="block" href="https://geon1999.github.io/ott/">넷플릭스 클론으로 이동</a>
+  </a>
+   <br /><br /> <br /><br />
+  <img height="500" src="preview/Home.gif" />
+</div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+</br>
 
-## Available Scripts
+## Preview 
 
-In the project directory, you can run:
+> Home
+- [API 사이트](https://developers.themoviedb.org/3/getting-started/introduction, "api link") 에서 제공 해주는 api 를 fetch 하여 영화들의 정보를 얻어옴
+  - `ReactQuery` 의 `useQuery` 를 통해 data 를 get 함
 
-### `npm start`
+  </br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  #### home 내부에 사용된 componet
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+  </br>
 
-### `npm test`
+  _Slider_
+  <div align="center">
+    <img height="500" src="preview/Slider.gif" />
+  </div>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  _Detail_
+  <div align="center">
+    <img height="500" src="preview/Detail.gif" />
+  </div>
+  
 
-### `npm run build`
+```
+// App.tsx
+<Route path="/" element={<Home />}>
+  <Route path="/movies/:movieId" element={<div>Movie</div>} />
+</Route>
+```
+  - `App.tsx` 에서 위와 같이 home `route` 내에 movie detail 을 위한 `route` 를 생성함
+  - 영화 포스터 클릭시 해당 `/movis/클릭된 영화 id` 로 이동되고 이동시 `movieId` 를 통해 fetch 하고 영화 정보를 얻옴
+  - 클릭시 `Framer Motion` 을 통해 애니메이션을 추가함
+    - `movieId` 와 해당 `slider` 의 이름을 합쳐 `layoutId` 기입하고 `layoutId` 를 통해 `slider` 의 영화 포스터 박스 -> `movie detail` 박스가 이어지도록 애니메이션 구현
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+</hr>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> Series
+  - Home 과 유사하게 작동함 
+  <div align="center">
+    <img height="500" src="preview/Series.gif" />
+  </div>
 
-### `npm run eject`
+</hr>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+> Search
+  - `useForm` 을 통해 input 에 기입된 키워드를 값으로 받고 키워드를 통해 영화와 시리즈의 data 를 fetch 로 받음
+ <div align="center">
+  <img height="500" src="preview/Search.gif" />
+ </div>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<hr />
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Built with
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+React / styled-components / Framer Motion / ReactQuery
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
