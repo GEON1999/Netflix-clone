@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://carrot-market-geon1999.vercel.app/">
+  <a href="https://geon1999.github.io/Netflix-clone/">
     <img height="120" src="/preview/logo.png" />
     <br />
     <a display="block" href="https://geon1999.github.io/Netflix-clone/">넷플릭스 클론으로 이동</a>
