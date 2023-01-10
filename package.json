@@ -54,8 +54,11 @@
   "devDependencies": {
     "@types/jquery": "^3.5.14",
     "@types/react-router-dom": "^5.3.3",
+    "json5": "^2.2.3",
     "loader-utils": "^3.2.1",
-    "shx": "^0.3.4"
+    "minimatch": "^5.1.2",
+    "shx": "^0.3.4",
+    "terser": "^5.16.1"
   },
   "homepage": "https://geon1999.github.io/Netflix-clone"
 }
